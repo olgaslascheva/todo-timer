@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/todo-kata.iml" filepath="$PROJECT_DIR$/.idea/todo-kata.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/todoapp-kata.iml" filepath="$PROJECT_DIR$/.idea/todoapp-kata.iml" />
     </modules>
   </component>
 </project>

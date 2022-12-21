@@ -19,11 +19,19 @@ export default class NewTaskForm extends Component {
   };
 
   onMinChange = (e) => {
-    this.setState({ min: !(/\D/.test(e.target.value) || e.target.value > 59) ? e.target.value : "" });
+    this.setState({
+      min: !(/\D/.test(e.target.value) || e.target.value > 59 || String(e.target.value).length > 2)
+        ? e.target.value
+        : "",
+    });
   };
 
   onSecChange = (e) => {
-    this.setState({ sec: !(/\D/.test(e.target.value) || e.target.value > 59) ? e.target.value : "" });
+    this.setState({
+      sec: !(/\D/.test(e.target.value) || e.target.value > 59 || String(e.target.value).length > 2)
+        ? e.target.value
+        : "",
+    });
   };
 
   onSubmit = (e) => {

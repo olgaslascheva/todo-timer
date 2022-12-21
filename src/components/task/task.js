@@ -35,7 +35,8 @@ export default class Task extends Component {
             ) : (
               <button type="button" aria-label="Play" className="icon icon-play" onClick={onTogglePlay} />
             )}
-            {min < 10 ? `0${min}` : min}:{sec < 10 ? `0${sec}` : sec}
+            {min < 10 && String(min).length !== 2 ? `0${min}` : min}:
+            {sec < 10 && String(sec).length !== 2 ? `0${sec}` : sec}
           </span>
           <span className="description"> created {time} ago </span>
         </label>

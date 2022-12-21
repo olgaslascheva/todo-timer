@@ -10,9 +10,9 @@ export default class App extends Component {
 
   state = {
     todoData: [
-      this.createItem("Task 1", "November 8, 2022 03:24:00"),
-      this.createItem("Task 2", "November 9, 2022 05:25:00"),
-      this.createItem("Task 3", "November 10, 2022 13:06:00"),
+      this.createItem("Task 1", 12, 25, "November 8, 2022 03:24:00"),
+      this.createItem("Task 2", 13, 26, "November 9, 2022 05:25:00"),
+      this.createItem("Task 3", 14, 27, "November 10, 2022 13:06:00"),
     ],
     filterValue: "all",
   };
@@ -49,8 +49,8 @@ export default class App extends Component {
     });
   };
 
-  addItem = (text) => {
-    const newItem = this.createItem(text);
+  addItem = (text, min, sec) => {
+    const newItem = this.createItem(text, min, sec);
 
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem];
@@ -83,12 +83,44 @@ export default class App extends Component {
     });
   };
 
-  createItem(description, time = Date.now()) {
+  onTogglePlay = (id) => {
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((el) => el.id === id);
+
+      const oldItem = todoData[idx];
+      const newItem = { ...oldItem, isCounting: !oldItem.isCounting };
+
+      return {
+        todoData: [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)],
+      };
+    });
+  };
+
+  updateTimer = (id) => {
+    this.setState(({ todoData }) => {
+      const idx = todoData.findIndex((el) => el.id === id);
+
+      const oldItem = todoData[idx];
+      const newItem = {
+        ...oldItem,
+        sec: Number(oldItem.sec) === 59 ? 0 : Number(oldItem.sec) + 1,
+        min: Number(oldItem.sec) === 59 ? Number(oldItem.min) + 1 : Number(oldItem.min),
+      };
+      return {
+        todoData: [...todoData.slice(0, idx), newItem, ...todoData.slice(idx + 1)],
+      };
+    });
+  };
+
+  createItem(title, min, sec, time = Date.now()) {
     this.maxId += 1;
     return {
-      description,
+      title,
       done: false,
       time: formatDistanceToNow(new Date(time)),
+      min: min === "" ? 0 : min,
+      sec: sec === "" ? 0 : sec,
+      isCounting: false,
       id: this.maxId,
     };
   }
@@ -103,7 +135,13 @@ export default class App extends Component {
       <section className="todoapp">
         <NewTaskForm onItemAdded={this.addItem} />
         <section className="main">
-          <TaskList todos={visibleItems} onDeleted={this.deleteItem} onToggleDone={this.onToggleDone} />
+          <TaskList
+            todos={visibleItems}
+            onDeleted={this.deleteItem}
+            onToggleDone={this.onToggleDone}
+            onTogglePlay={this.onTogglePlay}
+            updateTimer={this.updateTimer}
+          />
           <Footer
             toDo={todoCount}
             onCLearCompleted={this.onCLearCompleted}

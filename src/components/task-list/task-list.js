@@ -3,7 +3,7 @@ import "./task-list.css";
 
 import Task from "../task";
 
-function TaskList({ todos, onDeleted, onToggleDone }) {
+function TaskList({ todos, onDeleted, onToggleDone, onTogglePlay, updateTimer }) {
   const elements = todos.map((item) => {
     const { id, done, ...itemProps } = item;
 
@@ -14,7 +14,13 @@ function TaskList({ todos, onDeleted, onToggleDone }) {
 
     return (
       <li key={id} className={classNames}>
-        <Task {...itemProps} onDeleted={() => onDeleted(id)} onToggleDone={() => onToggleDone(id)} />
+        <Task
+          {...itemProps}
+          onDeleted={() => onDeleted(id)}
+          onToggleDone={() => onToggleDone(id)}
+          onTogglePlay={() => onTogglePlay(id)}
+          updateTimer={() => updateTimer(id)}
+        />
       </li>
     );
   });

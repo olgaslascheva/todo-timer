@@ -1,7 +1,7 @@
 import React from "react";
 import "./footer.css";
 
-import TaskFilter from "../task-filter";
+import TaskFilter from "../task-filter/task-filter";
 
 function Footer({ toDo, onCLearCompleted, filterValue, onFilterChange }) {
   return (
@@ -15,7 +15,7 @@ function Footer({ toDo, onCLearCompleted, filterValue, onFilterChange }) {
   );
 }
 
-Footer.defoultProps = {
+Footer.defaultProps = {
   onCLearCompleted: () => {},
   onFilterChange: () => {},
 };
